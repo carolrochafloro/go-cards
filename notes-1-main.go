@@ -8,7 +8,7 @@ package main
 
 import "fmt"
 
-func main() {
+func main1() {
 	/* ------ Every declared variable must be used ------ */
 	// declaring variables
 	var myDeck string = "My deck"
@@ -17,7 +17,7 @@ func main() {
 	fmt.Println(myDeck, myOtherDeck)
 
 	// declaring a slice
-	cards:= []string{newCard(), newCard()}
+	cards:= []string{newCard1(), newCard1()}
 	//adding items - creates a new slice and attributes it to the same variable
 	cards = append(cards, "Six of diamonds")
 
@@ -31,7 +31,7 @@ func main() {
 }
 
 // a function must declare the type of it's return
-func newCard() string {
+func newCard1() string {
 	return "Ace of spades"
 }
 

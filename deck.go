@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"strings"
+)
 
 /*
 
@@ -15,12 +19,13 @@ type deck []string
 func newDeck() deck {
 
 	cards := deck{}
-	cardSuits := []string {"Spades", "Diamonds", "Hearts", "Clubs"}
 	cardValues := []string {"Ace", "Two", "Three", "Four"}
+	cardSuits := []string {"Spades", "Diamonds", "Hearts", "Clubs"}
+
 
 	// the indexes where replaced with underscore bc they won't be used
-	for _, suit := range cardSuits {
-		for _, value := range cardValues {
+	for _, suit := range cardValues {
+		for _, value := range cardSuits {
 			cards = append(cards, suit + " of " + value)
 		}
 	}
@@ -55,3 +60,33 @@ func deal(d deck, handSize int) (deck, deck) {
 	*/
 	return d[:handSize], d[handSize:]
 }
+
+func (d deck) toString() string {
+
+	return strings.Join([]string(d), ",")
+	
+}
+
+// using "os" package to write a file, converting the string deck to byte
+func (d deck) saveToFile(fileName string) error {
+
+	return os.WriteFile(fileName, []byte(d.toString()), 0666)
+
+}
+
+func deckFromFile(fileName string) deck {
+
+	// bs = byte slice
+	bs, err := os.ReadFile(fileName)
+
+	// error handling - log and break
+	if err != nil {
+		fmt.Println(" ==== Error: ", err)
+		os.Exit(1)
+	}
+
+	s := strings.Split(string(bs), ",")
+
+	return deck(s)
+}
+
