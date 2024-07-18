@@ -18,13 +18,14 @@ func newDeck() deck {
 	cardSuits := []string {"Spades", "Diamonds", "Hearts", "Clubs"}
 	cardValues := []string {"Ace", "Two", "Three", "Four"}
 
-	for i, suit := range cardSuits {
-		for j, value := range cardValues {
+	// the indexes where replaced with underscore bc they won't be used
+	for _, suit := range cardSuits {
+		for _, value := range cardValues {
 			cards = append(cards, suit + " of " + value)
 		}
 	}
 
-	
+	return cards
 
 }
 
@@ -38,4 +39,19 @@ func(d deck) print() {
 	for i, card := range d {
 		fmt.Println(i, card)
 	}
+}
+
+// returning 2 values from a function and receiving parameters
+func deal(d deck, handSize int) (deck, deck) {
+	/*
+	
+	slice range syntax:
+	sliceName[startIndexIncluded:endIndexNotIncluded]
+
+	abbreviation:
+	sliceName[:endIndex] => from the beginning to the end index (not included)
+	slineName[startIndex:] => from the start index to the end (all included)
+
+	*/
+	return d[:handSize], d[handSize:]
 }

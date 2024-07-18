@@ -1,13 +1,13 @@
 package main
 
 func main() {
-	cards := deck{"Ace of diamonds", newCard()}
-	cards = append(cards, "Queen of spades")
+	cards := newDeck()
 
-	cards.print()
+	// functions declared in the same package don't have to be imported
+	// assingning two different returns of a function to two different variables
+	hand, remainingDeck := deal(cards, 5)
 
-}
+	hand.print()
+	remainingDeck.print()
 
-func newCard() string {
-	return "Five of diamonds"
 }
