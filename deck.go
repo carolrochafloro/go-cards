@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 /*
@@ -25,9 +27,13 @@ func newDeck() deck {
 
 	// the indexes where replaced with underscore bc they won't be used
 	for _, suit := range cardValues {
+
 		for _, value := range cardSuits {
+
 			cards = append(cards, suit + " of " + value)
+
 		}
+
 	}
 
 	return cards
@@ -42,7 +48,9 @@ letter abbreviation that matches it's type
 */ 
 func(d deck) print() {
 	for i, card := range d {
+
 		fmt.Println(i, card)
+
 	}
 }
 
@@ -81,12 +89,29 @@ func deckFromFile(fileName string) deck {
 
 	// error handling - log and break
 	if err != nil {
+
 		fmt.Println(" ==== Error: ", err)
 		os.Exit(1)
+
 	}
 
 	s := strings.Split(string(bs), ",")
 
 	return deck(s)
+}
+
+func (d deck) shuffle() {
+
+	// generating a seed to the random number generator
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
+
+	for i := range d {
+
+		newPosition := r.Intn(len(d) - 1)
+		d[i], d[newPosition] = d[newPosition], d[i]
+
+	}
+
 }
 
